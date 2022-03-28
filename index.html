@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenali Ramkrishna</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            background: rgb(29, 82, 77);
+        }
+
+        #value1,
+        #value2 {
+            border: none;
+            border-radius: 4px;
+        }
+
+        button,
+        #calbutton {
+            border: none;
+            border-radius: 10px;
+        }
+
+        button:hover {
+            background: lime;
+            cursor: pointer;
+            color: white;
+
+        }
+
+        #calbutton:hover {
+            background: lime;
+            cursor: pointer;
+            color: white;
+        }
+
+        #calframe {
+            border: 3px solid rgb(0, 255, 106);
+            width: 150px;
+            background: rgb(62, 151, 107);
+            margin-left: 35%;
+            display: none;
+        }
+
+        #calframe #frame {
+            margin: 2px;
+            position: relative;
+        }
+
+        #calframe button {
+            width: 30px;
+            /* margin:1px; */
+            margin: 1px;
+            height: 30px;
+            border: none;
+            background: rgb(72, 100, 87);
+            /* background: rgb(145, 146, 145); */
+            color: white;
+            border-radius: 50%;
+
+        }
+
+        #calframe input {
+            width: 145px;
+            height: 20px;
+            text-align: right;
+            border: none;
+            background: rgb(72, 100, 87);
+            color: white;
+            caret-color: white;
+            font-size: 20px;
+            cursor: text;
+            outline: none;
+        }
+
+        #calframe button:hover {
+            background: rgb(92, 155, 155);
+        }
+
+        #calframe #submit {
+            width: 70px;
+            height: 20px;
+            font-size: 15px;
+            border-radius:5px;
+            background: rgb(66, 105, 88);
+            margin-left: 45px;
+        }
+
+        #calframe #submit:hover {
+            background: rgb(34, 133, 34);
+
+        }
+
+        #history {
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0.6;
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+        }
+
+        #history:hover {
+            opacity: 1;
+        }
+
+        .calhistory {
+            position: absolute;
+            top: 20%;
+            left: 60%;
+            display: none;
+            color: rgb(209, 192, 192);
+            font-size: 15px;
+
+        }
+
+        #his {
+            margin-top: -15px;
+            outline: none;
+        }
+
+        #frame #h {
+            color: white;
+            font-size: 8px;
+            position: absolute;
+            right: 0px;
+            bottom: 8px;
+            display: none;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <input type="text" id="value1">
+    <input type="text" id="value2">
+    <input type="text" id="values" style="width: 40px; background:rgb(29, 82, 77);border:none;color:white;" readonly>
+
+    <hr>
+    <button onclick="Addition()">Get Addition</button>
+    <button onclick="Subtraction()">Get Subtraction</button>
+    <button onclick="Multiplication()">Get Multiplication</button>
+    <button onclick="Division()">Get Division</button>
+    <input onclick="ShowHide()" type="button" name="" id="calbutton" value="Get Calculater">
+    <hr>
+    <br>
+
+    <!-- ##############################🧡💕💖💘💙  CREATING A CALCULATOR 🧡💕💖💘💙 ################################################### -->
+
+    <div id="calframe">
+        <input type="text" id='Calculate' placeholder="0">
+        <div id="frame">
+
+            <button>1/x</button>
+            <button>x<sup>2</sup></button>
+            <button onclick="ClearItems()">C</button>
+            <button onclick="RemoveItems()">x</button>
+            <button onclick="assign_Items(1)">1</button>
+            <button onclick="assign_Items(2)">2</button>
+            <button onclick="assign_Items(3)">3</button>
+            <button onclick="assign_Items('-')">-</button>
+
+            <button onclick="assign_Items(4)">4</button>
+            <button onclick="assign_Items(5)">5</button>
+            <button onclick="assign_Items(6)">6</button>
+            <button onclick="assign_Items('/')">/</button>
+
+            <button onclick="assign_Items(7)">7</button>
+            <button onclick="assign_Items(8)">8</button>
+            <button onclick="assign_Items(9)">9</button>
+            <button onclick="assign_Items('*')">*</button>
+
+            <button onclick="assign_Items('.')">.</button>
+            <button onclick="assign_Items(0)">0</button>
+            <button onclick="assign_Items('%')">%</button>
+            <button onclick="assign_Items('+')">+</button>
+            <button onclick="Calculator()" id="submit">=</button>
+            <i onclick="history()" id="history" class="fa fa-history" onmouseover="overmessage(1)" onmouseleave="overmessage(2)" ondblclick="Clearall()"></i>
+            <h5 id="h">History</h5>
+
+        </div>
+    </div>
+    <div class="calhistory">
+        <p>Calculater History</p>
+        <textarea name="" id="his" cols="13" rows="10" readonly></textarea>
+
+    </div>
+
+
+
+<script>
+
+        window.onload = function () {
+            document.getElementById("value1").focus();
+            //   document.getElementsByTagName("body").style.font_size="50px";
+            document.body.style.zoom = "170%";
+        };
+        function ShowHide() {
+            let all = document.getElementById('calframe');
+            if (all.style.display === "block") {
+                all.style.display = "none";
+                document.getElementById("calbutton").value = " Get Calculater";
+                document.getElementById("value1").focus();
+
+            }
+            else {
+                all.style.display = "block";
+                document.getElementById("calbutton").value = "Hide Calculater";
+                document.getElementById('Calculate').focus();
+                // document.getElementById("calbutton").value  =    "Hide Calculater";
+
+            }
+
+        }
+
+
+
+
+        function assign_Items(a) {
+            let b = document.getElementById('Calculate').value;
+            if (b == 0) {
+
+                document.getElementById('Calculate').value = a;
+
+            }
+            else {
+                document.getElementById('Calculate').value = document.getElementById('Calculate').value + a;
+
+            }
+        }
+        function Calculator() {
+            let b = document.getElementById('Calculate').value;
+            if (b == "") {
+                document.getElementById('Calculate');
+            }
+            else {
+                let hist = document.getElementById("his");
+                let cals = document.getElementById("Calculate");
+                hist.value = hist.value + cals.value;
+                cals.value = eval(cals.value);
+                hist.value = hist.value + " = " + cals.value + " !\n";
+
+            }
+        }
+
+        function ClearItems() {
+            document.getElementById('Calculate').value = "";
+
+        }
+
+        function RemoveItems() {
+            let b = document.getElementById('Calculate').value;
+            document.getElementById('Calculate').value = b.substring(0, b.length - 1);
+
+
+        }
+
+        function Addition() {
+            document.getElementById('values').value = parseInt(document.getElementById('value1').value) + parseInt(document.getElementById('value2').value);
+        }
+        function Subtraction() {
+            document.getElementById('values').value = parseInt(document.getElementById('value1').value) - parseInt(document.getElementById('value2').value);
+        }
+        function Multiplication() {
+            document.getElementById('values').value = parseInt(document.getElementById('value1').value) * parseInt(document.getElementById('value2').value);
+        }
+        function Division() {
+            document.getElementById('values').value = parseInt(document.getElementById('value2').value) / parseInt(document.getElementById('value1').value);
+        }
+        let h = 0;
+        function history() {
+            let obj = document.getElementsByClassName("calhistory");
+            if (h == 0) {
+                obj[0].style.display = "block";
+                h = 1;
+            }
+            else {
+                obj[0].style.display = "none";
+                h = 0;
+            }
+        }
+
+        function Clearall(){
+            document.getElementById("his").value = "";
+
+
+        }
+
+        function overmessage(a) {
+            let C = document.getElementById("h");
+            if (a == 1) {
+                C.style.display = "block";
+            }
+
+            else if (a == 2) {
+                C.style.display = "none";
+
+            }
+
+        };
+
+</script>
+
+</body>
+
+</html>
